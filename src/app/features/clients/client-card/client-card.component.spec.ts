@@ -10,7 +10,7 @@ describe('ClientCardComponent', () => {
     id: '1',
     firstName: 'John',
     lastName: 'Doe',
-    birthdate: '1990-01-01',
+    birthDate: '1990-01-01',
     isActive: true,
   };
 

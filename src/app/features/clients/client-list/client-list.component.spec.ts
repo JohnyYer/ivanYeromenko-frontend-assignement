@@ -17,14 +17,14 @@ describe('ClientListComponent', () => {
       id: '1',
       firstName: 'John',
       lastName: 'Doe',
-      birthdate: '1990-01-01',
+      birthDate: '1990-01-01',
       isActive: true,
     },
     {
       id: '2',
       firstName: 'Jane',
       lastName: 'Smith',
-      birthdate: '1985-05-15',
+      birthDate: '1985-05-15',
       isActive: false,
     },
   ];
@@ -96,7 +96,7 @@ describe('ClientListComponent', () => {
     const newClient = {
       firstName: 'Test',
       lastName: 'User',
-      birthdate: '2000-01-01',
+      birthDate: '2000-01-01',
       isActive: true,
     };
     const createdClient = { id: '3', ...newClient };

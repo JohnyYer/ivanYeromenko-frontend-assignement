@@ -2,14 +2,14 @@ export interface Client {
   id: string;
   firstName: string;
   lastName: string;
-  birthdate: string;
+  birthDate: string;
   isActive: boolean;
 }
 
 export interface CreateClientRequest {
   firstName: string;
   lastName: string;
-  birthdate: string;
+  birthDate: string;
   isActive: boolean;
 }
 

@@ -33,7 +33,7 @@ describe('ClientService', () => {
         id: '1',
         firstName: 'John',
         lastName: 'Doe',
-        birthdate: '1990-01-01',
+        birthDate: '1990-01-01',
         isActive: true,
       },
     ];
@@ -51,7 +51,7 @@ describe('ClientService', () => {
     const newClient: CreateClientRequest = {
       firstName: 'Jane',
       lastName: 'Smith',
-      birthdate: '1985-05-15',
+      birthDate: '1985-05-15',
       isActive: true,
     };
 

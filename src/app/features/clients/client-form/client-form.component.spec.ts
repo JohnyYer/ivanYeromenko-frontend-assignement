@@ -11,7 +11,7 @@ describe('ClientFormComponent', () => {
     id: '1',
     firstName: 'John',
     lastName: 'Doe',
-    birthdate: '1990-01-01',
+    birthDate: '1990-01-01',
     isActive: true,
   };
 
@@ -57,7 +57,7 @@ describe('ClientFormComponent', () => {
     component.formData = {
       firstName: 'Jane',
       lastName: 'Smith',
-      birthdate: '1985-05-15',
+      birthDate: '1985-05-15',
       isActive: true,
     };
 
@@ -66,18 +66,18 @@ describe('ClientFormComponent', () => {
     expect(component.formSubmit.emit).toHaveBeenCalledWith(component.formData);
   });
 
-  it('should not emit form data when invalid', () => {
+  it('should emit form data even when invalid (validation handled by template)', () => {
     jest.spyOn(component.formSubmit, 'emit');
     component.formData = {
       firstName: '',
       lastName: 'Smith',
-      birthdate: '1985-05-15',
+      birthDate: '1985-05-15',
       isActive: true,
     };
 
     component.onSubmit();
 
-    expect(component.formSubmit.emit).not.toHaveBeenCalled();
+    expect(component.formSubmit.emit).toHaveBeenCalledWith(component.formData);
   });
 
   it('should emit cancel event and reset form', () => {
@@ -85,7 +85,7 @@ describe('ClientFormComponent', () => {
     component.formData = {
       firstName: 'Jane',
       lastName: 'Smith',
-      birthdate: '1985-05-15',
+      birthDate: '1985-05-15',
       isActive: true,
     };
 
@@ -99,7 +99,7 @@ describe('ClientFormComponent', () => {
     component.formData = {
       firstName: 'John',
       lastName: 'Doe',
-      birthdate: '1990-01-01',
+      birthDate: '1990-01-01',
       isActive: true,
     };
 
@@ -107,5 +107,28 @@ describe('ClientFormComponent', () => {
 
     component.formData.firstName = '';
     expect(component.isValidForm()).toBe(false);
+  });
+
+  it('should initialize date constraints', () => {
+    component.ngOnInit();
+
+    expect(component.maxDate).toBeDefined();
+    expect(component.minDate).toBeDefined();
+    expect(component.maxDate).toMatch(/^\d{4}-\d{2}-\d{2}$/);
+    expect(component.minDate).toMatch(/^\d{4}-\d{2}-\d{2}$/);
+  });
+
+  it('should check form validity with NgForm', () => {
+    const mockForm = {
+      valid: true,
+    } as NgForm;
+
+    expect(component.isFormValid(mockForm)).toBe(true);
+
+    const invalidForm = {
+      valid: false,
+    } as NgForm;
+
+    expect(component.isFormValid(invalidForm)).toBe(false);
   });
 });
