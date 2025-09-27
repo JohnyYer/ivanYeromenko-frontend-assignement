@@ -1,6 +1,11 @@
 import { Component, OnInit } from '@angular/core';
+import { MatDialog } from '@angular/material/dialog';
 import { ClientService } from '@core/services/client.service';
 import { Client, CreateClientRequest } from '@shared/models/client.model';
+import {
+  ClientFormComponent,
+  ClientFormData,
+} from '../client-form/client-form.component';
 
 @Component({
   selector: 'app-client-list',
@@ -9,16 +14,15 @@ import { Client, CreateClientRequest } from '@shared/models/client.model';
   standalone: false,
 })
 export class ClientListComponent implements OnInit {
-  showForm: boolean = false;
-  isEditMode: boolean = false;
-  editingClientId: string | null = null;
-  editingClient: Client | null = null;
   clients: Client[] = [];
   filteredClients: Client[] = [];
   searchTerm: string = '';
   filterActiveOnly: boolean = false;
 
-  constructor(private clientService: ClientService) {}
+  constructor(
+    private clientService: ClientService,
+    private dialog: MatDialog
+  ) {}
 
   ngOnInit(): void {
     this.loadClients();
@@ -37,64 +41,72 @@ export class ClientListComponent implements OnInit {
   }
 
   showCreateForm(): void {
-    this.isEditMode = false;
-    this.editingClient = null;
-    this.editingClientId = null;
-    this.showForm = true;
+    const dialogRef = this.dialog.open(ClientFormComponent, {
+      width: '600px',
+      maxWidth: '90vw',
+      data: {
+        client: null,
+        isEditMode: false,
+      } as ClientFormData,
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      if (result) {
+        this.createClient(result);
+      }
+    });
   }
 
   editClient(client: Client): void {
-    this.isEditMode = true;
-    this.editingClientId = client.id;
-    this.editingClient = client;
-    this.showForm = true;
+    const dialogRef = this.dialog.open(ClientFormComponent, {
+      width: '600px',
+      maxWidth: '90vw',
+      data: {
+        client: client,
+        isEditMode: true,
+      } as ClientFormData,
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      if (result) {
+        this.updateClient(client.id, result);
+      }
+    });
   }
 
-  onFormSubmit(clientData: CreateClientRequest): void {
-    if (this.isEditMode && this.editingClientId) {
-      // Update existing client
-      const updateRequest = {
-        id: this.editingClientId,
-        ...clientData,
-      };
+  private createClient(clientData: CreateClientRequest): void {
+    this.clientService.createClient(clientData).subscribe({
+      next: createdClient => {
+        this.clients.push(createdClient);
+        this.applyFilters();
+      },
+      error: error => {
+        console.error('Error creating client:', error);
+      },
+    });
+  }
 
-      this.clientService
-        .updateClient(this.editingClientId, updateRequest)
-        .subscribe({
-          next: updatedClient => {
-            const index = this.clients.findIndex(
-              c => c.id === this.editingClientId
-            );
-            if (index !== -1) {
-              this.clients[index] = updatedClient;
-              this.applyFilters();
-            }
-            this.onFormCancel();
-          },
-          error: error => {
-            console.error('Error updating client:', error);
-          },
-        });
-    } else {
-      // Create new client
-      this.clientService.createClient(clientData).subscribe({
-        next: createdClient => {
-          this.clients.push(createdClient);
+  private updateClient(
+    clientId: string,
+    clientData: CreateClientRequest
+  ): void {
+    const updateRequest = {
+      id: clientId,
+      ...clientData,
+    };
+
+    this.clientService.updateClient(clientId, updateRequest).subscribe({
+      next: updatedClient => {
+        const index = this.clients.findIndex(c => c.id === clientId);
+        if (index !== -1) {
+          this.clients[index] = updatedClient;
           this.applyFilters();
-          this.onFormCancel();
-        },
-        error: error => {
-          console.error('Error creating client:', error);
-        },
-      });
-    }
-  }
-
-  onFormCancel(): void {
-    this.showForm = false;
-    this.isEditMode = false;
-    this.editingClientId = null;
-    this.editingClient = null;
+        }
+      },
+      error: error => {
+        console.error('Error updating client:', error);
+      },
+    });
   }
 
   deleteClient(client: Client): void {

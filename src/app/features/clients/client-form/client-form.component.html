@@ -1,105 +1,124 @@
-<div class="client-form" *ngIf="showForm">
-  <h3>{{ formTitle }}</h3>
-  <form #clientForm="ngForm" (ngSubmit)="onSubmit()">
-    <div class="form-group">
-      <label for="firstName">First Name *</label>
-      <input
-        id="firstName"
-        type="text"
-        placeholder="Enter first name"
-        [(ngModel)]="formData.firstName"
-        name="firstName"
-        #firstName="ngModel"
-        required
-        minlength="2"
-        maxlength="50"
-        pattern="[a-zA-Z\s]+"
-        [class.error]="firstName.invalid && firstName.touched"
-      />
-      <div class="error-message" *ngIf="firstName.invalid && firstName.touched">
-        <div *ngIf="firstName.errors?.['required']">First name is required</div>
-        <div *ngIf="firstName.errors?.['minlength']">
-          First name must be at least 2 characters
-        </div>
-        <div *ngIf="firstName.errors?.['maxlength']">
-          First name must not exceed 50 characters
-        </div>
-        <div *ngIf="firstName.errors?.['pattern']">
-          First name can only contain letters and spaces
+<div class="client-form-dialog">
+  <h2 mat-dialog-title class="dialog-title">
+    <mat-icon>{{ isEditMode ? 'edit' : 'add' }}</mat-icon>
+    {{ formTitle }}
+  </h2>
+
+  <mat-dialog-content class="dialog-content">
+    <form #clientForm="ngForm" (ngSubmit)="onSubmit()">
+      <div class="form-fields">
+        <mat-form-field appearance="outline" class="full-width">
+          <mat-label>First Name</mat-label>
+          <input
+            matInput
+            type="text"
+            placeholder="Enter first name"
+            [(ngModel)]="formData.firstName"
+            name="firstName"
+            #firstName="ngModel"
+            required
+            minlength="2"
+            maxlength="50"
+            pattern="[a-zA-Z\s]+"
+          />
+          <mat-error *ngIf="firstName.invalid && firstName.touched">
+            <div *ngIf="firstName.errors?.['required']">
+              First name is required
+            </div>
+            <div *ngIf="firstName.errors?.['minlength']">
+              First name must be at least 2 characters
+            </div>
+            <div *ngIf="firstName.errors?.['maxlength']">
+              First name must not exceed 50 characters
+            </div>
+            <div *ngIf="firstName.errors?.['pattern']">
+              First name can only contain letters and spaces
+            </div>
+          </mat-error>
+        </mat-form-field>
+
+        <mat-form-field appearance="outline" class="full-width">
+          <mat-label>Last Name</mat-label>
+          <input
+            matInput
+            type="text"
+            placeholder="Enter last name"
+            [(ngModel)]="formData.lastName"
+            name="lastName"
+            #lastName="ngModel"
+            required
+            minlength="2"
+            maxlength="50"
+            pattern="[a-zA-Z\s]+"
+          />
+          <mat-error *ngIf="lastName.invalid && lastName.touched">
+            <div *ngIf="lastName.errors?.['required']">
+              Last name is required
+            </div>
+            <div *ngIf="lastName.errors?.['minlength']">
+              Last name must be at least 2 characters
+            </div>
+            <div *ngIf="lastName.errors?.['maxlength']">
+              Last name must not exceed 50 characters
+            </div>
+            <div *ngIf="lastName.errors?.['pattern']">
+              Last name can only contain letters and spaces
+            </div>
+          </mat-error>
+        </mat-form-field>
+
+        <mat-form-field appearance="outline" class="full-width">
+          <mat-label>Birth Date</mat-label>
+          <input
+            matInput
+            type="date"
+            [(ngModel)]="formData.birthDate"
+            name="birthDate"
+            #birthDate="ngModel"
+            required
+            [max]="maxDate"
+            [min]="minDate"
+          />
+          <mat-error *ngIf="birthDate.invalid && birthDate.touched">
+            <div *ngIf="birthDate.errors?.['required']">
+              Birth date is required
+            </div>
+            <div *ngIf="birthDate.errors?.['max']">
+              Birth date cannot be in the future
+            </div>
+            <div *ngIf="birthDate.errors?.['min']">
+              Birth date must be after 1900
+            </div>
+          </mat-error>
+        </mat-form-field>
+
+        <div class="checkbox-container">
+          <mat-checkbox
+            [(ngModel)]="formData.isActive"
+            name="isActive"
+            class="active-checkbox"
+          >
+            Active Client
+          </mat-checkbox>
         </div>
       </div>
-    </div>
+    </form>
+  </mat-dialog-content>
 
-    <div class="form-group">
-      <label for="lastName">Last Name *</label>
-      <input
-        id="lastName"
-        type="text"
-        placeholder="Enter last name"
-        [(ngModel)]="formData.lastName"
-        name="lastName"
-        #lastName="ngModel"
-        required
-        minlength="2"
-        maxlength="50"
-        pattern="[a-zA-Z\s]+"
-        [class.error]="lastName.invalid && lastName.touched"
-      />
-      <div class="error-message" *ngIf="lastName.invalid && lastName.touched">
-        <div *ngIf="lastName.errors?.['required']">Last name is required</div>
-        <div *ngIf="lastName.errors?.['minlength']">
-          Last name must be at least 2 characters
-        </div>
-        <div *ngIf="lastName.errors?.['maxlength']">
-          Last name must not exceed 50 characters
-        </div>
-        <div *ngIf="lastName.errors?.['pattern']">
-          Last name can only contain letters and spaces
-        </div>
-      </div>
-    </div>
-
-    <div class="form-group">
-      <label for="birthDate">Birth Date *</label>
-      <input
-        id="birthDate"
-        type="date"
-        [(ngModel)]="formData.birthDate"
-        name="birthDate"
-        #birthDate="ngModel"
-        required
-        [max]="maxDate"
-        [min]="minDate"
-        [class.error]="birthDate.invalid && birthDate.touched"
-      />
-      <div class="error-message" *ngIf="birthDate.invalid && birthDate.touched">
-        <div *ngIf="birthDate.errors?.['required']">Birth date is required</div>
-        <div *ngIf="birthDate.errors?.['max']">
-          Birth date cannot be in the future
-        </div>
-        <div *ngIf="birthDate.errors?.['min']">
-          Birth date must be after 1900
-        </div>
-      </div>
-    </div>
-
-    <div class="form-group">
-      <label class="checkbox-label">
-        <input
-          type="checkbox"
-          [(ngModel)]="formData.isActive"
-          name="isActive"
-        />
-        <span class="checkmark"></span>
-        Active Client
-      </label>
-    </div>
-
-    <div class="form-actions">
-      <button type="submit" [disabled]="!isFormValid(clientForm)">
-        {{ submitButtonText }}
-      </button>
-      <button type="button" (click)="onCancel()">Cancel</button>
-    </div>
-  </form>
+  <mat-dialog-actions class="dialog-actions">
+    <button mat-button (click)="onCancel()" class="cancel-button">
+      <mat-icon>close</mat-icon>
+      Cancel
+    </button>
+    <button
+      mat-raised-button
+      color="primary"
+      [disabled]="!canSubmit(clientForm)"
+      (click)="onSubmit()"
+      class="submit-button"
+    >
+      <mat-icon>{{ isEditMode ? 'save' : 'add' }}</mat-icon>
+      {{ submitButtonText }}
+    </button>
+  </mat-dialog-actions>
 </div>
