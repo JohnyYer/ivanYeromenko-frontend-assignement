@@ -1,14 +1,149 @@
-<div class="home">
-  <h1>👋 Welcome to the Ivan Yeromenko Frontend Assignment</h1>
-  <h3>Need improvements in this application</h3>
-  <p>Go to clients tab and perform below actions</p>
-  <ol>
-    <li>Edit the clients</li>
-    <li>Delete the clients</li>
-    <li>Search the client list using search box</li>
-    <li>Filter the clients by isActive checkbox</li>
-    <li>Add validations and unit tests</li>
-    <li>Beautify the client list</li>
-    <li>Improve wherever you can :)</li>
-  </ol>
+<div class="home-container">
+  <!-- Hero Section -->
+  <section class="hero-section">
+    <div class="hero-content">
+      <div class="welcome-badge">
+        <mat-icon>rocket_launch</mat-icon>
+        <span>Frontend Assignment</span>
+      </div>
+      <h1 class="hero-title">Welcome to the Client Management System</h1>
+      <p class="hero-subtitle">
+        A modern, responsive application built with Angular and Material Design.
+        Manage your clients efficiently with an intuitive interface.
+      </p>
+      <div class="hero-actions">
+        <button mat-raised-button color="primary" routerLink="/clients">
+          <mat-icon>people</mat-icon>
+          View Clients
+        </button>
+      </div>
+    </div>
+    <div class="hero-visual">
+      <div class="floating-card">
+        <mat-icon>person</mat-icon>
+        <span>Client Data</span>
+      </div>
+      <div class="floating-card">
+        <mat-icon>analytics</mat-icon>
+        <span>Analytics</span>
+      </div>
+      <div class="floating-card">
+        <mat-icon>security</mat-icon>
+        <span>Secure</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- Features Section -->
+  <section class="features-section">
+    <div class="container">
+      <h2 class="section-title">Assignment Features</h2>
+      <p class="section-subtitle">
+        Explore the capabilities of this client management system
+      </p>
+
+      <div class="features-grid">
+        <mat-card class="feature-card">
+          <mat-card-header>
+            <div mat-card-avatar class="feature-icon">
+              <mat-icon>edit</mat-icon>
+            </div>
+            <mat-card-title>Edit Clients</mat-card-title>
+          </mat-card-header>
+          <mat-card-content>
+            <p>
+              Update client information with a user-friendly form interface.
+            </p>
+          </mat-card-content>
+        </mat-card>
+
+        <mat-card class="feature-card">
+          <mat-card-header>
+            <div mat-card-avatar class="feature-icon">
+              <mat-icon>delete</mat-icon>
+            </div>
+            <mat-card-title>Delete Clients</mat-card-title>
+          </mat-card-header>
+          <mat-card-content>
+            <p>Remove clients from the system with confirmation dialogs.</p>
+          </mat-card-content>
+        </mat-card>
+
+        <mat-card class="feature-card">
+          <mat-card-header>
+            <div mat-card-avatar class="feature-icon">
+              <mat-icon>search</mat-icon>
+            </div>
+            <mat-card-title>Search & Filter</mat-card-title>
+          </mat-card-header>
+          <mat-card-content>
+            <p>
+              Find clients quickly with real-time search and filtering options.
+            </p>
+          </mat-card-content>
+        </mat-card>
+
+        <mat-card class="feature-card">
+          <mat-card-header>
+            <div mat-card-avatar class="feature-icon">
+              <mat-icon>check_circle</mat-icon>
+            </div>
+            <mat-card-title>Active Status</mat-card-title>
+          </mat-card-header>
+          <mat-card-content>
+            <p>
+              Filter clients by their active status for better organization.
+            </p>
+          </mat-card-content>
+        </mat-card>
+
+        <mat-card class="feature-card">
+          <mat-card-header>
+            <div mat-card-avatar class="feature-icon">
+              <mat-icon>verified</mat-icon>
+            </div>
+            <mat-card-title>Validations</mat-card-title>
+          </mat-card-header>
+          <mat-card-content>
+            <p>Comprehensive form validations ensure data integrity.</p>
+          </mat-card-content>
+        </mat-card>
+
+        <mat-card class="feature-card">
+          <mat-card-header>
+            <div mat-card-avatar class="feature-icon">
+              <mat-icon>science</mat-icon>
+            </div>
+            <mat-card-title>Unit Tests</mat-card-title>
+          </mat-card-header>
+          <mat-card-content>
+            <p>
+              Thoroughly tested components for reliability and maintainability.
+            </p>
+          </mat-card-content>
+        </mat-card>
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA Section -->
+  <section class="cta-section">
+    <div class="container">
+      <div class="cta-content">
+        <h2>Ready to Get Started?</h2>
+        <p>
+          Navigate to the Clients section to begin managing your client data.
+        </p>
+        <button
+          mat-raised-button
+          color="accent"
+          size="large"
+          routerLink="/clients"
+        >
+          <mat-icon>arrow_forward</mat-icon>
+          Go to Clients
+        </button>
+      </div>
+    </div>
+  </section>
 </div>
