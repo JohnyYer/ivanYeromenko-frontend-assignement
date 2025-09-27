@@ -6,6 +6,10 @@ import {
   ClientFormComponent,
   ClientFormData,
 } from '../client-form/client-form.component';
+import {
+  ConfirmationDialogComponent,
+  ConfirmationDialogData,
+} from '@shared/components/confirmation-dialog/confirmation-dialog.component';
 
 @Component({
   selector: 'app-client-list',
@@ -110,21 +114,33 @@ export class ClientListComponent implements OnInit {
   }
 
   deleteClient(client: Client): void {
-    if (
-      confirm(
-        `Are you sure you want to delete ${client.firstName} ${client.lastName}?`
-      )
-    ) {
-      this.clientService.deleteClient(client.id).subscribe({
-        next: () => {
-          this.clients = this.clients.filter(c => c.id !== client.id);
-          this.applyFilters();
-        },
-        error: error => {
-          console.error('Error deleting client:', error);
-        },
-      });
-    }
+    const dialogData: ConfirmationDialogData = {
+      title: 'Delete Client',
+      message: `Are you sure you want to delete ${client.firstName} ${client.lastName}? This action cannot be undone.`,
+      confirmText: 'Delete',
+      cancelText: 'Cancel',
+      type: 'danger',
+    };
+
+    const dialogRef = this.dialog.open(ConfirmationDialogComponent, {
+      width: '450px',
+      maxWidth: '90vw',
+      data: dialogData,
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      if (result) {
+        this.clientService.deleteClient(client.id).subscribe({
+          next: () => {
+            this.clients = this.clients.filter(c => c.id !== client.id);
+            this.applyFilters();
+          },
+          error: error => {
+            console.error('Error deleting client:', error);
+          },
+        });
+      }
+    });
   }
 
   onSearchChange(): void {

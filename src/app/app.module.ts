@@ -12,6 +12,7 @@ import { ClientCardComponent } from '@features/clients/client-card/client-card.c
 import { ClientFormComponent } from '@features/clients/client-form/client-form.component';
 import { FormsModule } from '@angular/forms';
 import { DateFormatPipe } from '@shared/pipes/date-format.pipe';
+import { ConfirmationDialogComponent } from '@shared/components/confirmation-dialog/confirmation-dialog.component';
 
 // Angular Material imports
 import { MatToolbarModule } from '@angular/material/toolbar';
@@ -35,6 +36,7 @@ import { MatDialogModule } from '@angular/material/dialog';
     ClientCardComponent,
     ClientFormComponent,
     DateFormatPipe,
+    ConfirmationDialogComponent,
   ],
   imports: [
     BrowserModule,

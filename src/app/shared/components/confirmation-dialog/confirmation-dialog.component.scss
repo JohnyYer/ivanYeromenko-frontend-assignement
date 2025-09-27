@@ -1,0 +1,153 @@
+.confirmation-dialog {
+  min-width: 400px;
+  max-width: 500px;
+
+  .dialog-header {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    padding: 1.5rem 1.5rem 1rem 1.5rem;
+    background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+    border-bottom: 1px solid #e0e0e0;
+
+    .icon-container {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 48px;
+      height: 48px;
+      border-radius: 50%;
+      flex-shrink: 0;
+
+      &.warning {
+        background: linear-gradient(135deg, #ff9800 0%, #ffb74d 100%);
+        color: white;
+      }
+
+      &.danger {
+        background: linear-gradient(135deg, #f44336 0%, #ef5350 100%);
+        color: white;
+      }
+
+      &.info {
+        background: linear-gradient(135deg, #2196f3 0%, #42a5f5 100%);
+        color: white;
+      }
+
+      mat-icon {
+        font-size: 1.5rem;
+        width: 1.5rem;
+        height: 1.5rem;
+      }
+    }
+
+    .dialog-title {
+      font-family: 'Inter', 'Roboto', sans-serif;
+      font-size: 1.25rem;
+      font-weight: 600;
+      color: #2c3e50;
+      margin: 0;
+      flex: 1;
+    }
+  }
+
+  .dialog-content {
+    padding: 1.5rem;
+
+    .dialog-message {
+      font-family: 'Inter', 'Roboto', sans-serif;
+      font-size: 1rem;
+      line-height: 1.5;
+      color: #666;
+      margin: 0;
+    }
+  }
+
+  .dialog-actions {
+    padding: 1rem 1.5rem 1.5rem 1.5rem;
+    display: flex;
+    justify-content: flex-end;
+    gap: 1rem;
+    border-top: 1px solid #e0e0e0;
+    background: #fafafa;
+
+    .cancel-button {
+      color: #666;
+      font-family: 'Inter', 'Roboto', sans-serif;
+      font-weight: 500;
+
+      mat-icon {
+        margin-right: 0.5rem;
+        font-size: 1rem;
+        width: 1rem;
+        height: 1rem;
+      }
+
+      &:hover {
+        background-color: rgba(0, 0, 0, 0.04);
+      }
+    }
+
+    .confirm-button {
+      font-family: 'Inter', 'Roboto', sans-serif;
+      font-weight: 600;
+      padding: 0.5rem 1.5rem;
+      border-radius: 6px;
+
+      mat-icon {
+        margin-right: 0.5rem;
+        font-size: 1rem;
+        width: 1rem;
+        height: 1rem;
+      }
+
+      &:hover {
+        transform: translateY(-1px);
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+      }
+    }
+  }
+}
+
+// Responsive Design
+@media (max-width: 768px) {
+  .confirmation-dialog {
+    min-width: 90vw;
+    max-width: 95vw;
+
+    .dialog-header {
+      padding: 1rem 1rem 0.75rem 1rem;
+
+      .icon-container {
+        width: 40px;
+        height: 40px;
+
+        mat-icon {
+          font-size: 1.25rem;
+          width: 1.25rem;
+          height: 1.25rem;
+        }
+      }
+
+      .dialog-title {
+        font-size: 1.125rem;
+      }
+    }
+
+    .dialog-content {
+      padding: 1rem;
+    }
+
+    .dialog-actions {
+      padding: 0.75rem 1rem 1rem 1rem;
+      flex-direction: column-reverse;
+      gap: 0.75rem;
+
+      .cancel-button,
+      .confirm-button {
+        width: 100%;
+        justify-content: center;
+      }
+    }
+  }
+}
