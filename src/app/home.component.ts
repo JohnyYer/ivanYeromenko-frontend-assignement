@@ -37,4 +37,4 @@ import { Component } from "@angular/core";
     `,
   ],
 })
-export class HomeComponenet {}
+export class HomeComponent {}
