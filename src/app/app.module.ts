@@ -10,6 +10,7 @@ import { ClientListComponent } from '@features/clients/client-list/client-list.c
 import { ClientCardComponent } from '@features/clients/client-card/client-card.component';
 import { ClientFormComponent } from '@features/clients/client-form/client-form.component';
 import { FormsModule } from '@angular/forms';
+import { DateFormatPipe } from '@shared/pipes/date-format.pipe';
 
 @NgModule({
   declarations: [
@@ -19,6 +20,7 @@ import { FormsModule } from '@angular/forms';
     ClientListComponent,
     ClientCardComponent,
     ClientFormComponent,
+    DateFormatPipe,
   ],
   imports: [BrowserModule, AppRoutingModule, HttpClientModule, FormsModule],
   providers: [],

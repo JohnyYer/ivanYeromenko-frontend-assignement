@@ -1,6 +1,7 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { ClientCardComponent } from './client-card.component';
 import { Client } from '@shared/models/client.model';
+import { DateFormatPipe } from '@shared/pipes/date-format.pipe';
 
 describe('ClientCardComponent', () => {
   let component: ClientCardComponent;
@@ -16,7 +17,7 @@ describe('ClientCardComponent', () => {
 
   beforeEach(() => {
     TestBed.configureTestingModule({
-      declarations: [ClientCardComponent],
+      declarations: [ClientCardComponent, DateFormatPipe],
     });
     fixture = TestBed.createComponent(ClientCardComponent);
     component = fixture.componentInstance;
@@ -33,7 +34,7 @@ describe('ClientCardComponent', () => {
     const clientInfo = compiled.querySelector('.client-info');
 
     expect(clientInfo.textContent).toContain('John Doe');
-    expect(clientInfo.textContent).toContain('1990-01-01');
+    expect(clientInfo.textContent).toContain('Jan 1, 1990'); // Formatted by dateFormat pipe
     expect(clientInfo.textContent).toContain('Active');
   });
 

@@ -1,6 +1,7 @@
 <div class="client-card">
   <span class="client-info">
-    {{ client.firstName }} {{ client.lastName }} - {{ client.birthDate }} -
+    {{ client.firstName }} {{ client.lastName }} -
+    {{ client.birthDate | dateFormat: 'display' }} -
     {{ client.isActive ? 'Active' : 'Inactive' }}
   </span>
   <span class="client-actions">

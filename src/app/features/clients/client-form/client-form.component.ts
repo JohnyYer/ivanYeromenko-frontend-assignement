@@ -9,6 +9,7 @@ import {
 } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { CreateClientRequest, Client } from '@shared/models/client.model';
+import { DateUtilityService } from '@shared/services/date-utility.service';
 
 @Component({
   selector: 'app-client-form',
@@ -22,6 +23,8 @@ export class ClientFormComponent implements OnInit, OnChanges {
   @Input() showForm: boolean = false;
   @Output() formSubmit = new EventEmitter<CreateClientRequest>();
   @Output() formCancel = new EventEmitter<void>();
+
+  constructor(private dateUtility: DateUtilityService) {}
 
   formData: CreateClientRequest = {
     firstName: '',
@@ -90,11 +93,9 @@ export class ClientFormComponent implements OnInit, OnChanges {
   }
 
   private initializeDateConstraints(): void {
-    const today = new Date();
-    const minDate = new Date(1900, 0, 1);
-
-    this.maxDate = today.toISOString().split('T')[0];
-    this.minDate = minDate.toISOString().split('T')[0];
+    const constraints = this.dateUtility.getDateConstraints();
+    this.maxDate = constraints.maxDate;
+    this.minDate = constraints.minDate;
   }
 
   isFormValid(form: NgForm): boolean {
