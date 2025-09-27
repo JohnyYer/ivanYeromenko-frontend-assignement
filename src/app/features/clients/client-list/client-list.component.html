@@ -99,11 +99,19 @@
       </button>
     </div>
 
+    <!-- Loading State -->
+    <div class="loading-state" *ngIf="isLoading">
+      <mat-icon class="loading-icon">refresh</mat-icon>
+      <h3>Loading clients...</h3>
+      <p>Please wait while we fetch your client data</p>
+    </div>
+
     <!-- Client Cards Grid -->
-    <div class="clients-grid" *ngIf="filteredClients.length > 0">
+    <div class="clients-grid" *ngIf="filteredClients.length > 0 && !isLoading">
       <app-client-card
         *ngFor="let client of filteredClients; trackBy: trackByClientId"
         [client]="client"
+        [isDeleting]="isDeleting && deletingClientId === client.id"
         (edit)="editClient($event)"
         (delete)="deleteClient($event)"
         class="client-card-item"

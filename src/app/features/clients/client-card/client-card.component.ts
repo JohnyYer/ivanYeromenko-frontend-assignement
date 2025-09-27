@@ -9,6 +9,7 @@ import { Client } from '@shared/models/client.model';
 })
 export class ClientCardComponent {
   @Input() client!: Client;
+  @Input() isDeleting: boolean = false;
   @Output() edit = new EventEmitter<Client>();
   @Output() delete = new EventEmitter<Client>();
 

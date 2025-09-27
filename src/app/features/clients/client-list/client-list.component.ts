@@ -23,6 +23,11 @@ export class ClientListComponent implements OnInit {
   searchTerm: string = '';
   filterActiveOnly: boolean = false;
 
+  // Loading states
+  isLoading: boolean = false;
+  isDeleting: boolean = false;
+  deletingClientId: string | null = null;
+
   constructor(
     private clientService: ClientService,
     private dialog: MatDialog
@@ -33,13 +38,16 @@ export class ClientListComponent implements OnInit {
   }
 
   loadClients(): void {
+    this.isLoading = true;
     this.clientService.getClients().subscribe({
       next: clients => {
         this.clients = clients;
         this.applyFilters();
+        this.isLoading = false;
       },
       error: error => {
         console.error('Error loading clients:', error);
+        this.isLoading = false;
       },
     });
   }
@@ -130,13 +138,19 @@ export class ClientListComponent implements OnInit {
 
     dialogRef.afterClosed().subscribe(result => {
       if (result) {
+        this.isDeleting = true;
+        this.deletingClientId = client.id;
         this.clientService.deleteClient(client.id).subscribe({
           next: () => {
             this.clients = this.clients.filter(c => c.id !== client.id);
             this.applyFilters();
+            this.isDeleting = false;
+            this.deletingClientId = null;
           },
           error: error => {
             console.error('Error deleting client:', error);
+            this.isDeleting = false;
+            this.deletingClientId = null;
           },
         });
       }

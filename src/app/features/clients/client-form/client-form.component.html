@@ -117,8 +117,11 @@
       (click)="onSubmit()"
       class="submit-button"
     >
-      <mat-icon>{{ isEditMode ? 'save' : 'add' }}</mat-icon>
-      {{ submitButtonText }}
+      <mat-icon *ngIf="!isSubmitting">{{
+        isEditMode ? 'save' : 'add'
+      }}</mat-icon>
+      <mat-icon *ngIf="isSubmitting" class="loading-icon">refresh</mat-icon>
+      {{ isSubmitting ? 'Saving...' : submitButtonText }}
     </button>
   </mat-dialog-actions>
 </div>

@@ -32,6 +32,7 @@
       color="primary"
       (click)="onEdit()"
       class="action-button edit-button"
+      [disabled]="isDeleting"
     >
       <mat-icon>edit</mat-icon>
       Edit
@@ -41,9 +42,11 @@
       color="warn"
       (click)="onDelete()"
       class="action-button delete-button"
+      [disabled]="isDeleting"
     >
-      <mat-icon>delete</mat-icon>
-      Delete
+      <mat-icon *ngIf="!isDeleting">delete</mat-icon>
+      <mat-icon *ngIf="isDeleting" class="loading-icon">refresh</mat-icon>
+      {{ isDeleting ? 'Deleting...' : 'Delete' }}
     </button>
   </mat-card-actions>
 </mat-card>

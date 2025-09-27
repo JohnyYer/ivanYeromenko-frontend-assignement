@@ -46,6 +46,9 @@ export class ClientFormComponent implements OnInit {
   maxDate: string = '';
   minDate: string = '';
 
+  // Loading state
+  isSubmitting: boolean = false;
+
   ngOnInit(): void {
     this.initializeDateConstraints();
     this.initializeForm();
@@ -73,7 +76,11 @@ export class ClientFormComponent implements OnInit {
   }
 
   onSubmit(): void {
-    this.dialogRef.close(this.formData);
+    this.isSubmitting = true;
+    // Simulate a small delay for form submission
+    setTimeout(() => {
+      this.dialogRef.close(this.formData);
+    }, 500);
   }
 
   onCancel(): void {
@@ -136,6 +143,8 @@ export class ClientFormComponent implements OnInit {
   }
 
   canSubmit(form: NgForm): boolean {
-    return this.isFormValid(form) && this.hasFormChanged();
+    return (
+      this.isFormValid(form) && this.hasFormChanged() && !this.isSubmitting
+    );
   }
 }
