@@ -1,7 +1,15 @@
-<header class="header">
+<mat-toolbar color="primary">
+  <span>Client Management System</span>
+  <span class="spacer"></span>
   <nav>
-    <a routerLink="/">Home</a>
-    <a routerLink="/clients">Clients</a>
+    <button mat-button routerLink="/" routerLinkActive="active">
+      <mat-icon>home</mat-icon>
+      Home
+    </button>
+    <button mat-button routerLink="/clients" routerLinkActive="active">
+      <mat-icon>people</mat-icon>
+      Clients
+    </button>
   </nav>
-</header>
+</mat-toolbar>
 <router-outlet />

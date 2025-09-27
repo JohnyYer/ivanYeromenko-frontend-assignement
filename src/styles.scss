@@ -1,3 +1,6 @@
+// Angular Material theming - must be at the top
+@use '@angular/material' as mat;
+
 body {
   margin: 0;
   padding: 0;
@@ -18,30 +21,7 @@ button {
   border-radius: 30px;
 }
 
-.header {
-  border-bottom: 1px solid #006175;
-  text-align: center;
-
-  h1 {
-    margin: 0;
-    margin-bottom: 0px;
-    font-size: 24px;
-  }
-
-  nav {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    gap: 16px;
-
-    a {
-      padding: 8px 4px;
-      text-decoration: none;
-      color: #006175;
-      font-size: 18px;
-    }
-  }
-}
+// Removed old header styles - now using Angular Material toolbar
 
 .client-card {
   display: flex;
@@ -60,3 +40,15 @@ a {
   text-decoration: underline;
   color: #006175;
 }
+
+html,
+body {
+  height: 100%;
+}
+body {
+  margin: 0;
+  font-family: Roboto, 'Helvetica Neue', sans-serif;
+}
+
+// Use default Material theme - simplified approach
+@include mat.core();
