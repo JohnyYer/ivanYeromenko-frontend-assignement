@@ -5,11 +5,12 @@ import { HttpClientModule } from "@angular/common/http";
 import { AppRoutingModule } from "./app-routing.module";
 import { AppComponent } from "./app.component";
 import { ClientsComponent } from "./clients.component";
-import { HomeComponent } from "./home.component";
+import { HomeComponent } from "./features/home/components/home.component";
+import { ClientListComponent } from "./features/clients/components/client-list/client-list.component";
 import { FormsModule } from "@angular/forms";
 
 @NgModule({
-  declarations: [AppComponent, ClientsComponent, HomeComponent],
+  declarations: [AppComponent, ClientsComponent, HomeComponent, ClientListComponent],
   imports: [BrowserModule, AppRoutingModule, HttpClientModule, FormsModule],
   providers: [],
   bootstrap: [AppComponent],
