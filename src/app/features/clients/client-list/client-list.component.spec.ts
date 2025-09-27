@@ -84,6 +84,14 @@ describe('ClientListComponent', () => {
     expect(component.filteredClients).toEqual([mockClients[0]]);
   });
 
+  it('should show create form', () => {
+    component.showCreateForm();
+
+    expect(component.showForm).toBe(true);
+    expect(component.isEditMode).toBe(false);
+    expect(component.editingClient).toBe(null);
+  });
+
   it('should create a new client', () => {
     const newClient = {
       firstName: 'Test',
@@ -95,8 +103,9 @@ describe('ClientListComponent', () => {
 
     clientService.createClient.mockReturnValue(of(createdClient));
     component.clients = [];
+    component.isEditMode = false;
 
-    component.onCreateSubmit(newClient);
+    component.onFormSubmit(newClient);
 
     expect(clientService.createClient).toHaveBeenCalledWith(newClient);
     expect(component.clients).toContain(createdClient);
@@ -116,7 +125,8 @@ describe('ClientListComponent', () => {
   it('should start editing a client', () => {
     component.editClient(mockClients[0]);
 
-    expect(component.showEditForm).toBe(true);
+    expect(component.showForm).toBe(true);
+    expect(component.isEditMode).toBe(true);
     expect(component.editingClientId).toBe('1');
     expect(component.editingClient).toEqual(mockClients[0]);
   });
@@ -125,27 +135,30 @@ describe('ClientListComponent', () => {
     const updatedClient = { ...mockClients[0], firstName: 'Johnny' };
     clientService.updateClient.mockReturnValue(of(updatedClient));
     component.clients = [...mockClients];
+    component.isEditMode = true;
     component.editingClientId = '1';
     const updateData = { ...mockClients[0], firstName: 'Johnny' };
 
-    component.onEditSubmit(updateData);
+    component.onFormSubmit(updateData);
 
     expect(clientService.updateClient).toHaveBeenCalledWith(
       '1',
       expect.objectContaining({ id: '1', firstName: 'Johnny' })
     );
     expect(component.clients[0].firstName).toBe('Johnny');
-    expect(component.showEditForm).toBe(false);
+    expect(component.showForm).toBe(false);
   });
 
-  it('should cancel editing', () => {
-    component.showEditForm = true;
+  it('should cancel form', () => {
+    component.showForm = true;
+    component.isEditMode = true;
     component.editingClientId = '1';
     component.editingClient = mockClients[0];
 
-    component.onEditCancel();
+    component.onFormCancel();
 
-    expect(component.showEditForm).toBe(false);
+    expect(component.showForm).toBe(false);
+    expect(component.isEditMode).toBe(false);
     expect(component.editingClientId).toBe(null);
     expect(component.editingClient).toBe(null);
   });

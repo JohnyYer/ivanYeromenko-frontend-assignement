@@ -1,23 +1,15 @@
 <div class="create-client">
-  <button style="font-size: 16px" (click)="showNewClientForm = true">
+  <button style="font-size: 16px" (click)="showCreateForm()">
     Create client
   </button>
 </div>
 <div class="clients">
   <app-client-form
-    [showForm]="showNewClientForm"
-    [isEditMode]="false"
-    (formSubmit)="onCreateSubmit($event)"
-    (formCancel)="onCreateCancel()"
-  >
-  </app-client-form>
-
-  <app-client-form
-    [showForm]="showEditForm"
-    [isEditMode]="true"
+    [showForm]="showForm"
+    [isEditMode]="isEditMode"
     [client]="editingClient"
-    (formSubmit)="onEditSubmit($event)"
-    (formCancel)="onEditCancel()"
+    (formSubmit)="onFormSubmit($event)"
+    (formCancel)="onFormCancel()"
   >
   </app-client-form>
   <div class="clients-filter">

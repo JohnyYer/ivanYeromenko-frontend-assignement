@@ -9,8 +9,8 @@ import { Client, CreateClientRequest } from '@shared/models/client.model';
   standalone: false,
 })
 export class ClientListComponent implements OnInit {
-  showNewClientForm: boolean = false;
-  showEditForm: boolean = false;
+  showForm: boolean = false;
+  isEditMode: boolean = false;
   editingClientId: string | null = null;
   editingClient: Client | null = null;
   clients: Client[] = [];
@@ -36,31 +36,23 @@ export class ClientListComponent implements OnInit {
     });
   }
 
-  onCreateSubmit(clientData: CreateClientRequest): void {
-    this.clientService.createClient(clientData).subscribe({
-      next: createdClient => {
-        this.clients.push(createdClient);
-        this.applyFilters();
-        this.showNewClientForm = false;
-      },
-      error: error => {
-        console.error('Error creating client:', error);
-      },
-    });
-  }
-
-  onCreateCancel(): void {
-    this.showNewClientForm = false;
+  showCreateForm(): void {
+    this.isEditMode = false;
+    this.editingClient = null;
+    this.editingClientId = null;
+    this.showForm = true;
   }
 
   editClient(client: Client): void {
+    this.isEditMode = true;
     this.editingClientId = client.id;
     this.editingClient = client;
-    this.showEditForm = true;
+    this.showForm = true;
   }
 
-  onEditSubmit(clientData: CreateClientRequest): void {
-    if (this.editingClientId) {
+  onFormSubmit(clientData: CreateClientRequest): void {
+    if (this.isEditMode && this.editingClientId) {
+      // Update existing client
       const updateRequest = {
         id: this.editingClientId,
         ...clientData,
@@ -77,17 +69,30 @@ export class ClientListComponent implements OnInit {
               this.clients[index] = updatedClient;
               this.applyFilters();
             }
-            this.onEditCancel();
+            this.onFormCancel();
           },
           error: error => {
             console.error('Error updating client:', error);
           },
         });
+    } else {
+      // Create new client
+      this.clientService.createClient(clientData).subscribe({
+        next: createdClient => {
+          this.clients.push(createdClient);
+          this.applyFilters();
+          this.onFormCancel();
+        },
+        error: error => {
+          console.error('Error creating client:', error);
+        },
+      });
     }
   }
 
-  onEditCancel(): void {
-    this.showEditForm = false;
+  onFormCancel(): void {
+    this.showForm = false;
+    this.isEditMode = false;
     this.editingClientId = null;
     this.editingClient = null;
   }
