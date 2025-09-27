@@ -12,13 +12,13 @@ describe('ClientFormComponent', () => {
     firstName: 'John',
     lastName: 'Doe',
     birthdate: '1990-01-01',
-    isActive: true
+    isActive: true,
   };
 
   beforeEach(() => {
     TestBed.configureTestingModule({
       declarations: [ClientFormComponent],
-      imports: [FormsModule]
+      imports: [FormsModule],
     });
     fixture = TestBed.createComponent(ClientFormComponent);
     component = fixture.componentInstance;
@@ -32,7 +32,7 @@ describe('ClientFormComponent', () => {
   it('should initialize form for create mode', () => {
     component.isEditMode = false;
     component.ngOnInit();
-    
+
     expect(component.formData.firstName).toBe('');
     expect(component.formData.lastName).toBe('');
     expect(component.formData.isActive).toBe(false);
@@ -44,7 +44,7 @@ describe('ClientFormComponent', () => {
     component.isEditMode = true;
     component.client = mockClient;
     component.ngOnInit();
-    
+
     expect(component.formData.firstName).toBe('John');
     expect(component.formData.lastName).toBe('Doe');
     expect(component.formData.isActive).toBe(true);
@@ -58,11 +58,11 @@ describe('ClientFormComponent', () => {
       firstName: 'Jane',
       lastName: 'Smith',
       birthdate: '1985-05-15',
-      isActive: true
+      isActive: true,
     };
-    
+
     component.onSubmit();
-    
+
     expect(component.formSubmit.emit).toHaveBeenCalledWith(component.formData);
   });
 
@@ -72,11 +72,11 @@ describe('ClientFormComponent', () => {
       firstName: '',
       lastName: 'Smith',
       birthdate: '1985-05-15',
-      isActive: true
+      isActive: true,
     };
-    
+
     component.onSubmit();
-    
+
     expect(component.formSubmit.emit).not.toHaveBeenCalled();
   });
 
@@ -86,11 +86,11 @@ describe('ClientFormComponent', () => {
       firstName: 'Jane',
       lastName: 'Smith',
       birthdate: '1985-05-15',
-      isActive: true
+      isActive: true,
     };
-    
+
     component.onCancel();
-    
+
     expect(component.formCancel.emit).toHaveBeenCalled();
     expect(component.formData.firstName).toBe('');
   });
@@ -100,11 +100,11 @@ describe('ClientFormComponent', () => {
       firstName: 'John',
       lastName: 'Doe',
       birthdate: '1990-01-01',
-      isActive: true
+      isActive: true,
     };
-    
+
     expect(component.isValidForm()).toBe(true);
-    
+
     component.formData.firstName = '';
     expect(component.isValidForm()).toBe(false);
   });

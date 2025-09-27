@@ -1,4 +1,12 @@
-import { Component, Input, Output, EventEmitter, OnInit, OnChanges, SimpleChanges } from '@angular/core';
+import {
+  Component,
+  Input,
+  Output,
+  EventEmitter,
+  OnInit,
+  OnChanges,
+  SimpleChanges,
+} from '@angular/core';
 import { CreateClientRequest, Client } from '@shared/models/client.model';
 
 @Component({
@@ -18,7 +26,7 @@ export class ClientFormComponent implements OnInit, OnChanges {
     firstName: '',
     lastName: '',
     birthdate: '',
-    isActive: false
+    isActive: false,
   };
 
   ngOnInit(): void {
@@ -37,14 +45,14 @@ export class ClientFormComponent implements OnInit, OnChanges {
         firstName: this.client.firstName,
         lastName: this.client.lastName,
         birthdate: this.client.birthdate,
-        isActive: this.client.isActive
+        isActive: this.client.isActive,
       };
     } else {
       this.formData = {
         firstName: '',
         lastName: '',
         birthdate: '',
-        isActive: false
+        isActive: false,
       };
     }
   }
@@ -65,7 +73,7 @@ export class ClientFormComponent implements OnInit, OnChanges {
       firstName: '',
       lastName: '',
       birthdate: '',
-      isActive: false
+      isActive: false,
     };
   }
 
@@ -78,6 +86,10 @@ export class ClientFormComponent implements OnInit, OnChanges {
   }
 
   isValidForm(): boolean {
-    return !!(this.formData.firstName && this.formData.lastName && this.formData.birthdate);
+    return !!(
+      this.formData.firstName &&
+      this.formData.lastName &&
+      this.formData.birthdate
+    );
   }
 }

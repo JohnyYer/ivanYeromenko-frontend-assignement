@@ -11,12 +11,12 @@ describe('ClientCardComponent', () => {
     firstName: 'John',
     lastName: 'Doe',
     birthdate: '1990-01-01',
-    isActive: true
+    isActive: true,
   };
 
   beforeEach(() => {
     TestBed.configureTestingModule({
-      declarations: [ClientCardComponent]
+      declarations: [ClientCardComponent],
     });
     fixture = TestBed.createComponent(ClientCardComponent);
     component = fixture.componentInstance;
@@ -31,7 +31,7 @@ describe('ClientCardComponent', () => {
   it('should display client information', () => {
     const compiled = fixture.nativeElement;
     const clientInfo = compiled.querySelector('.client-info');
-    
+
     expect(clientInfo.textContent).toContain('John Doe');
     expect(clientInfo.textContent).toContain('1990-01-01');
     expect(clientInfo.textContent).toContain('Active');
@@ -41,9 +41,9 @@ describe('ClientCardComponent', () => {
     jest.spyOn(component.edit, 'emit');
     const compiled = fixture.nativeElement;
     const editLink = compiled.querySelector('.edit-link');
-    
+
     editLink.click();
-    
+
     expect(component.edit.emit).toHaveBeenCalledWith(mockClient);
   });
 
@@ -51,19 +51,19 @@ describe('ClientCardComponent', () => {
     jest.spyOn(component.delete, 'emit');
     const compiled = fixture.nativeElement;
     const deleteLink = compiled.querySelector('.delete-link');
-    
+
     deleteLink.click();
-    
+
     expect(component.delete.emit).toHaveBeenCalledWith(mockClient);
   });
 
   it('should display "Inactive" for inactive clients', () => {
     component.client = { ...mockClient, isActive: false };
     fixture.detectChanges();
-    
+
     const compiled = fixture.nativeElement;
     const clientInfo = compiled.querySelector('.client-info');
-    
+
     expect(clientInfo.textContent).toContain('Inactive');
   });
 });

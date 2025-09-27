@@ -7,7 +7,7 @@ describe('HomeComponent', () => {
 
   beforeEach(() => {
     TestBed.configureTestingModule({
-      declarations: [HomeComponent]
+      declarations: [HomeComponent],
     });
     fixture = TestBed.createComponent(HomeComponent);
     component = fixture.componentInstance;
@@ -20,7 +20,9 @@ describe('HomeComponent', () => {
 
   it('should display welcome message', () => {
     const compiled = fixture.nativeElement;
-    expect(compiled.querySelector('h1').textContent).toContain('Welcome to the Ivan Yeromenko Frontend Assignment');
+    expect(compiled.querySelector('h1').textContent).toContain(
+      'Welcome to the Ivan Yeromenko Frontend Assignment'
+    );
   });
 
   it('should display improvement list', () => {

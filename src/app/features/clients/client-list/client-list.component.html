@@ -1,12 +1,15 @@
 <div class="create-client">
-  <button style="font-size: 16px" (click)="showNewClientForm = true">Create client</button>
+  <button style="font-size: 16px" (click)="showNewClientForm = true">
+    Create client
+  </button>
 </div>
 <div class="clients">
   <app-client-form
     [showForm]="showNewClientForm"
     [isEditMode]="false"
     (formSubmit)="onCreateSubmit($event)"
-    (formCancel)="onCreateCancel()">
+    (formCancel)="onCreateCancel()"
+  >
   </app-client-form>
 
   <app-client-form
@@ -14,15 +17,28 @@
     [isEditMode]="true"
     [client]="editingClient"
     (formSubmit)="onEditSubmit($event)"
-    (formCancel)="onEditCancel()">
+    (formCancel)="onEditCancel()"
+  >
   </app-client-form>
   <div class="clients-filter">
     <h3>Filter clients</h3>
     <div class="flex-wrapper">
-      <input type="text" placeholder="Filter by clients name" [(ngModel)]="searchTerm" (input)="onSearchChange()" />
+      <input
+        type="text"
+        placeholder="Filter by clients name"
+        [(ngModel)]="searchTerm"
+        (input)="onSearchChange()"
+      />
       <div class="filter-checkbox-wrapper">
-        <input id="filterCheckbox" type="checkbox" [(ngModel)]="filterActiveOnly" (change)="onFilterChange()"/> 
-        <span style="padding-left: 8px"><label for="filterCheckbox">Filter by active state</label></span>
+        <input
+          id="filterCheckbox"
+          type="checkbox"
+          [(ngModel)]="filterActiveOnly"
+          (change)="onFilterChange()"
+        />
+        <span style="padding-left: 8px"
+          ><label for="filterCheckbox">Filter by active state</label></span
+        >
       </div>
     </div>
   </div>
@@ -30,6 +46,7 @@
     *ngFor="let client of filteredClients; trackBy: trackByClientId"
     [client]="client"
     (edit)="editClient($event)"
-    (delete)="deleteClient($event)">
+    (delete)="deleteClient($event)"
+  >
   </app-client-card>
 </div>

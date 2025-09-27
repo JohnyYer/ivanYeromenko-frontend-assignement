@@ -1,11 +1,11 @@
-import { Component, OnInit } from "@angular/core";
-import { ClientService } from "@core/services/client.service";
-import { Client, CreateClientRequest } from "@shared/models/client.model";
+import { Component, OnInit } from '@angular/core';
+import { ClientService } from '@core/services/client.service';
+import { Client, CreateClientRequest } from '@shared/models/client.model';
 
 @Component({
-  selector: "app-client-list",
-  templateUrl: "./client-list.component.html",
-  styleUrls: ["./client-list.component.scss"],
+  selector: 'app-client-list',
+  templateUrl: './client-list.component.html',
+  styleUrls: ['./client-list.component.scss'],
   standalone: false,
 })
 export class ClientListComponent implements OnInit {
@@ -26,26 +26,26 @@ export class ClientListComponent implements OnInit {
 
   private loadClients(): void {
     this.clientService.getClients().subscribe({
-      next: (clients) => {
+      next: clients => {
         this.clients = clients;
         this.applyFilters();
       },
-      error: (error) => {
+      error: error => {
         console.error('Error loading clients:', error);
-      }
+      },
     });
   }
 
   onCreateSubmit(clientData: CreateClientRequest): void {
     this.clientService.createClient(clientData).subscribe({
-      next: (createdClient) => {
+      next: createdClient => {
         this.clients.push(createdClient);
         this.applyFilters();
         this.showNewClientForm = false;
       },
-      error: (error) => {
+      error: error => {
         console.error('Error creating client:', error);
-      }
+      },
     });
   }
 
@@ -63,22 +63,26 @@ export class ClientListComponent implements OnInit {
     if (this.editingClientId) {
       const updateRequest = {
         id: this.editingClientId,
-        ...clientData
+        ...clientData,
       };
-      
-      this.clientService.updateClient(this.editingClientId, updateRequest).subscribe({
-        next: (updatedClient) => {
-          const index = this.clients.findIndex(c => c.id === this.editingClientId);
-          if (index !== -1) {
-            this.clients[index] = updatedClient;
-            this.applyFilters();
-          }
-          this.onEditCancel();
-        },
-        error: (error) => {
-          console.error('Error updating client:', error);
-        }
-      });
+
+      this.clientService
+        .updateClient(this.editingClientId, updateRequest)
+        .subscribe({
+          next: updatedClient => {
+            const index = this.clients.findIndex(
+              c => c.id === this.editingClientId
+            );
+            if (index !== -1) {
+              this.clients[index] = updatedClient;
+              this.applyFilters();
+            }
+            this.onEditCancel();
+          },
+          error: error => {
+            console.error('Error updating client:', error);
+          },
+        });
     }
   }
 
@@ -89,19 +93,22 @@ export class ClientListComponent implements OnInit {
   }
 
   deleteClient(client: Client): void {
-    if (confirm(`Are you sure you want to delete ${client.firstName} ${client.lastName}?`)) {
+    if (
+      confirm(
+        `Are you sure you want to delete ${client.firstName} ${client.lastName}?`
+      )
+    ) {
       this.clientService.deleteClient(client.id).subscribe({
         next: () => {
           this.clients = this.clients.filter(c => c.id !== client.id);
           this.applyFilters();
         },
-        error: (error) => {
+        error: error => {
           console.error('Error deleting client:', error);
-        }
+        },
       });
     }
   }
-
 
   onSearchChange(): void {
     this.applyFilters();
@@ -117,9 +124,10 @@ export class ClientListComponent implements OnInit {
     // Search filter
     if (this.searchTerm.trim()) {
       const searchLower = this.searchTerm.toLowerCase();
-      filtered = filtered.filter(client =>
-        client.firstName.toLowerCase().includes(searchLower) ||
-        client.lastName.toLowerCase().includes(searchLower)
+      filtered = filtered.filter(
+        client =>
+          client.firstName.toLowerCase().includes(searchLower) ||
+          client.lastName.toLowerCase().includes(searchLower)
       );
     }
 
@@ -130,7 +138,6 @@ export class ClientListComponent implements OnInit {
 
     this.filteredClients = filtered;
   }
-
 
   trackByClientId(index: number, client: Client): string {
     return client.id;

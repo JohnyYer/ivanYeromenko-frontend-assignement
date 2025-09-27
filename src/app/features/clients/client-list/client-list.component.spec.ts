@@ -18,15 +18,15 @@ describe('ClientListComponent', () => {
       firstName: 'John',
       lastName: 'Doe',
       birthdate: '1990-01-01',
-      isActive: true
+      isActive: true,
     },
     {
       id: '2',
       firstName: 'Jane',
       lastName: 'Smith',
       birthdate: '1985-05-15',
-      isActive: false
-    }
+      isActive: false,
+    },
   ];
 
   beforeEach(() => {
@@ -34,15 +34,17 @@ describe('ClientListComponent', () => {
       getClients: jest.fn(),
       createClient: jest.fn(),
       updateClient: jest.fn(),
-      deleteClient: jest.fn()
+      deleteClient: jest.fn(),
     } as jest.Mocked<ClientService>;
 
     TestBed.configureTestingModule({
-      declarations: [ClientListComponent, ClientCardComponent, ClientFormComponent],
+      declarations: [
+        ClientListComponent,
+        ClientCardComponent,
+        ClientFormComponent,
+      ],
       imports: [HttpClientTestingModule, FormsModule],
-      providers: [
-        { provide: ClientService, useValue: spy }
-      ]
+      providers: [{ provide: ClientService, useValue: spy }],
     });
 
     fixture = TestBed.createComponent(ClientListComponent);
@@ -56,9 +58,9 @@ describe('ClientListComponent', () => {
 
   it('should load clients on init', () => {
     clientService.getClients.mockReturnValue(of(mockClients));
-    
+
     component.ngOnInit();
-    
+
     expect(clientService.getClients).toHaveBeenCalled();
     expect(component.clients).toEqual(mockClients);
     expect(component.filteredClients).toEqual(mockClients);
@@ -67,18 +69,18 @@ describe('ClientListComponent', () => {
   it('should filter clients by search term', () => {
     component.clients = mockClients;
     component.searchTerm = 'John';
-    
+
     component.onSearchChange();
-    
+
     expect(component.filteredClients).toEqual([mockClients[0]]);
   });
 
   it('should filter clients by active status', () => {
     component.clients = mockClients;
     component.filterActiveOnly = true;
-    
+
     component.onFilterChange();
-    
+
     expect(component.filteredClients).toEqual([mockClients[0]]);
   });
 
@@ -87,15 +89,15 @@ describe('ClientListComponent', () => {
       firstName: 'Test',
       lastName: 'User',
       birthdate: '2000-01-01',
-      isActive: true
+      isActive: true,
     };
     const createdClient = { id: '3', ...newClient };
-    
+
     clientService.createClient.mockReturnValue(of(createdClient));
     component.clients = [];
-    
+
     component.onCreateSubmit(newClient);
-    
+
     expect(clientService.createClient).toHaveBeenCalledWith(newClient);
     expect(component.clients).toContain(createdClient);
   });
@@ -104,16 +106,16 @@ describe('ClientListComponent', () => {
     jest.spyOn(window, 'confirm').mockReturnValue(true);
     clientService.deleteClient.mockReturnValue(of(undefined));
     component.clients = [...mockClients];
-    
+
     component.deleteClient(mockClients[0]);
-    
+
     expect(clientService.deleteClient).toHaveBeenCalledWith('1');
     expect(component.clients).not.toContain(mockClients[0]);
   });
 
   it('should start editing a client', () => {
     component.editClient(mockClients[0]);
-    
+
     expect(component.showEditForm).toBe(true);
     expect(component.editingClientId).toBe('1');
     expect(component.editingClient).toEqual(mockClients[0]);
@@ -125,10 +127,13 @@ describe('ClientListComponent', () => {
     component.clients = [...mockClients];
     component.editingClientId = '1';
     const updateData = { ...mockClients[0], firstName: 'Johnny' };
-    
+
     component.onEditSubmit(updateData);
-    
-    expect(clientService.updateClient).toHaveBeenCalledWith('1', expect.objectContaining({ id: '1', firstName: 'Johnny' }));
+
+    expect(clientService.updateClient).toHaveBeenCalledWith(
+      '1',
+      expect.objectContaining({ id: '1', firstName: 'Johnny' })
+    );
     expect(component.clients[0].firstName).toBe('Johnny');
     expect(component.showEditForm).toBe(false);
   });
@@ -137,9 +142,9 @@ describe('ClientListComponent', () => {
     component.showEditForm = true;
     component.editingClientId = '1';
     component.editingClient = mockClients[0];
-    
+
     component.onEditCancel();
-    
+
     expect(component.showEditForm).toBe(false);
     expect(component.editingClientId).toBe(null);
     expect(component.editingClient).toBe(null);

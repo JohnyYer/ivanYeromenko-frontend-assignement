@@ -1,5 +1,8 @@
 import { TestBed } from '@angular/core/testing';
-import { HttpClientTestingModule, HttpTestingController } from '@angular/common/http/testing';
+import {
+  HttpClientTestingModule,
+  HttpTestingController,
+} from '@angular/common/http/testing';
 import { ClientService } from './client.service';
 import { Client, CreateClientRequest } from '@shared/models/client.model';
 
@@ -10,7 +13,7 @@ describe('ClientService', () => {
   beforeEach(() => {
     TestBed.configureTestingModule({
       imports: [HttpClientTestingModule],
-      providers: [ClientService]
+      providers: [ClientService],
     });
     service = TestBed.inject(ClientService);
     httpMock = TestBed.inject(HttpTestingController);
@@ -31,8 +34,8 @@ describe('ClientService', () => {
         firstName: 'John',
         lastName: 'Doe',
         birthdate: '1990-01-01',
-        isActive: true
-      }
+        isActive: true,
+      },
     ];
 
     service.getClients().subscribe(clients => {
@@ -49,12 +52,12 @@ describe('ClientService', () => {
       firstName: 'Jane',
       lastName: 'Smith',
       birthdate: '1985-05-15',
-      isActive: true
+      isActive: true,
     };
 
     const createdClient: Client = {
       id: '2',
-      ...newClient
+      ...newClient,
     };
 
     service.createClient(newClient).subscribe(client => {

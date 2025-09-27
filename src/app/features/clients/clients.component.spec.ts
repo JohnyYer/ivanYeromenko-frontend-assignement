@@ -12,8 +12,13 @@ describe('ClientsComponent', () => {
 
   beforeEach(() => {
     TestBed.configureTestingModule({
-      declarations: [ClientsComponent, ClientListComponent, ClientCardComponent, ClientFormComponent],
-      imports: [HttpClientTestingModule, FormsModule]
+      declarations: [
+        ClientsComponent,
+        ClientListComponent,
+        ClientCardComponent,
+        ClientFormComponent,
+      ],
+      imports: [HttpClientTestingModule, FormsModule],
     });
     fixture = TestBed.createComponent(ClientsComponent);
     component = fixture.componentInstance;

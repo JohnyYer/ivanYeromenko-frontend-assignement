@@ -1,10 +1,14 @@
-import { Injectable } from "@angular/core";
-import { HttpClient } from "@angular/common/http";
-import { Observable } from "rxjs";
-import { Client, CreateClientRequest, UpdateClientRequest } from "@shared/models/client.model";
+import { Injectable } from '@angular/core';
+import { HttpClient } from '@angular/common/http';
+import { Observable } from 'rxjs';
+import {
+  Client,
+  CreateClientRequest,
+  UpdateClientRequest,
+} from '@shared/models/client.model';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class ClientService {
   private readonly apiUrl = 'http://localhost:3000/clients';
