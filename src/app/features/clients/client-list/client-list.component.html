@@ -26,14 +26,10 @@
       </div>
     </div>
   </div>
-  <div class="client-card" *ngFor="let client of filteredClients">
-    <span>
-      {{ client.firstName }} {{ client.lastName }} -
-      {{ client.birthdate }} - {{ client.isActive }}
-    </span>
-    <span>
-      <a (click)="editClient(client)">Edit</a>
-      <a style="padding-left: 8px" (click)="deleteClient(client)">Delete</a>
-    </span>
-  </div>
+  <app-client-card
+    *ngFor="let client of filteredClients; trackBy: trackByClientId"
+    [client]="client"
+    (edit)="editClient($event)"
+    (delete)="deleteClient($event)">
+  </app-client-card>
 </div>

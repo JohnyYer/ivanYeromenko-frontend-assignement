@@ -1,0 +1,10 @@
+<div class="client-card">
+  <span class="client-info">
+    {{ client.firstName }} {{ client.lastName }} -
+    {{ client.birthdate }} - {{ client.isActive ? 'Active' : 'Inactive' }}
+  </span>
+  <span class="client-actions">
+    <a (click)="onEdit()" class="edit-link">Edit</a>
+    <a (click)="onDelete()" class="delete-link">Delete</a>
+  </span>
+</div>

@@ -2,7 +2,8 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { FormsModule } from '@angular/forms';
 import { ClientListComponent } from './client-list.component';
-import { ClientFormComponent } from '@shared/components/client-form/client-form.component';
+import { ClientCardComponent } from '../client-card/client-card.component';
+import { ClientFormComponent } from '../client-form/client-form.component';
 import { ClientService } from '@core/services/client.service';
 import { of } from 'rxjs';
 
@@ -37,7 +38,7 @@ describe('ClientListComponent', () => {
     } as jest.Mocked<ClientService>;
 
     TestBed.configureTestingModule({
-      declarations: [ClientListComponent, ClientFormComponent],
+      declarations: [ClientListComponent, ClientCardComponent, ClientFormComponent],
       imports: [HttpClientTestingModule, FormsModule],
       providers: [
         { provide: ClientService, useValue: spy }
