@@ -1,9 +1,66 @@
-<div class="create-client">
-  <button style="font-size: 16px" (click)="showCreateForm()">
-    Create client
-  </button>
-</div>
-<div class="clients">
+<div class="client-list-container">
+  <!-- Header Section -->
+  <section class="header-section">
+    <div class="header-content">
+      <div class="header-text">
+        <h1 class="page-title">Client Management</h1>
+        <p class="page-subtitle">
+          Manage your clients efficiently with our intuitive interface
+        </p>
+      </div>
+      <div class="header-actions">
+        <button
+          mat-raised-button
+          color="primary"
+          (click)="showCreateForm()"
+          class="create-button"
+        >
+          <mat-icon>add</mat-icon>
+          Add New Client
+        </button>
+      </div>
+    </div>
+  </section>
+
+  <!-- Filter Section -->
+  <section class="filter-section">
+    <mat-card class="filter-card">
+      <mat-card-header>
+        <div mat-card-avatar class="filter-icon">
+          <mat-icon>filter_list</mat-icon>
+        </div>
+        <mat-card-title>Filter & Search</mat-card-title>
+        <mat-card-subtitle>Find clients quickly</mat-card-subtitle>
+      </mat-card-header>
+      <mat-card-content>
+        <div class="filter-controls">
+          <mat-form-field appearance="outline" class="search-field">
+            <mat-label>Search clients</mat-label>
+            <input
+              matInput
+              type="text"
+              placeholder="Enter client name..."
+              [(ngModel)]="searchTerm"
+              (input)="onSearchChange()"
+            />
+            <mat-icon matSuffix>search</mat-icon>
+          </mat-form-field>
+
+          <div class="filter-options">
+            <mat-checkbox
+              [(ngModel)]="filterActiveOnly"
+              (change)="onFilterChange()"
+              class="active-filter"
+            >
+              Show only active clients
+            </mat-checkbox>
+          </div>
+        </div>
+      </mat-card-content>
+    </mat-card>
+  </section>
+
+  <!-- Client Form Modal -->
   <app-client-form
     [showForm]="showForm"
     [isEditMode]="isEditMode"
@@ -12,33 +69,56 @@
     (formCancel)="onFormCancel()"
   >
   </app-client-form>
-  <div class="clients-filter">
-    <h3>Filter clients</h3>
-    <div class="flex-wrapper">
-      <input
-        type="text"
-        placeholder="Filter by clients name"
-        [(ngModel)]="searchTerm"
-        (input)="onSearchChange()"
-      />
-      <div class="filter-checkbox-wrapper">
-        <input
-          id="filterCheckbox"
-          type="checkbox"
-          [(ngModel)]="filterActiveOnly"
-          (change)="onFilterChange()"
-        />
-        <span style="padding-left: 8px"
-          ><label for="filterCheckbox">Filter by active state</label></span
+
+  <!-- Results Section -->
+  <section class="results-section">
+    <div class="results-header">
+      <h2 class="results-title">
+        <mat-icon>people</mat-icon>
+        Clients ({{ filteredClients.length }})
+      </h2>
+      <div class="results-actions" *ngIf="filteredClients.length > 0">
+        <button
+          mat-icon-button
+          matTooltip="Refresh list"
+          (click)="loadClients()"
         >
+          <mat-icon>refresh</mat-icon>
+        </button>
       </div>
     </div>
-  </div>
-  <app-client-card
-    *ngFor="let client of filteredClients; trackBy: trackByClientId"
-    [client]="client"
-    (edit)="editClient($event)"
-    (delete)="deleteClient($event)"
-  >
-  </app-client-card>
+
+    <!-- Empty State -->
+    <div class="empty-state" *ngIf="filteredClients.length === 0">
+      <mat-icon class="empty-icon">people_outline</mat-icon>
+      <h3>No clients found</h3>
+      <p *ngIf="searchTerm || filterActiveOnly">
+        Try adjusting your search criteria or filters
+      </p>
+      <p *ngIf="!searchTerm && !filterActiveOnly">
+        Get started by adding your first client
+      </p>
+      <button
+        mat-raised-button
+        color="primary"
+        (click)="showCreateForm()"
+        *ngIf="!searchTerm && !filterActiveOnly"
+      >
+        <mat-icon>add</mat-icon>
+        Add First Client
+      </button>
+    </div>
+
+    <!-- Client Cards Grid -->
+    <div class="clients-grid" *ngIf="filteredClients.length > 0">
+      <app-client-card
+        *ngFor="let client of filteredClients; trackBy: trackByClientId"
+        [client]="client"
+        (edit)="editClient($event)"
+        (delete)="deleteClient($event)"
+        class="client-card-item"
+      >
+      </app-client-card>
+    </div>
+  </section>
 </div>
