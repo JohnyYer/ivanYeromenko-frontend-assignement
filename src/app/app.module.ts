@@ -7,10 +7,11 @@ import { AppComponent } from "./app.component";
 import { ClientsComponent } from "@features/clients/components/clients/clients.component";
 import { HomeComponent } from "@features/home/components/home.component";
 import { ClientListComponent } from "@features/clients/components/client-list/client-list.component";
+import { ClientFormComponent } from "@shared/components/client-form/client-form.component";
 import { FormsModule } from "@angular/forms";
 
 @NgModule({
-  declarations: [AppComponent, ClientsComponent, HomeComponent, ClientListComponent],
+  declarations: [AppComponent, ClientsComponent, HomeComponent, ClientListComponent, ClientFormComponent],
   imports: [BrowserModule, AppRoutingModule, HttpClientModule, FormsModule],
   providers: [],
   bootstrap: [AppComponent],

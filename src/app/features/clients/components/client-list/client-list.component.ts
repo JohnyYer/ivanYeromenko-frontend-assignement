@@ -10,12 +10,9 @@ import { Client, CreateClientRequest } from "@shared/models/client.model";
 })
 export class ClientListComponent implements OnInit {
   showNewClientForm: boolean = false;
-  newClient: CreateClientRequest = {
-    firstName: '',
-    lastName: '',
-    birthdate: '',
-    isActive: false
-  };
+  showEditForm: boolean = false;
+  editingClientId: string | null = null;
+  editingClient: Client | null = null;
   clients: Client[] = [];
   filteredClients: Client[] = [];
   searchTerm: string = '';
@@ -39,25 +36,56 @@ export class ClientListComponent implements OnInit {
     });
   }
 
-  createClient(): void {
-    if (this.isValidClient()) {
-      this.clientService.createClient(this.newClient).subscribe({
-        next: (createdClient) => {
-          this.clients.push(createdClient);
-          this.applyFilters();
-          this.resetForm();
+  onCreateSubmit(clientData: CreateClientRequest): void {
+    this.clientService.createClient(clientData).subscribe({
+      next: (createdClient) => {
+        this.clients.push(createdClient);
+        this.applyFilters();
+        this.showNewClientForm = false;
+      },
+      error: (error) => {
+        console.error('Error creating client:', error);
+      }
+    });
+  }
+
+  onCreateCancel(): void {
+    this.showNewClientForm = false;
+  }
+
+  editClient(client: Client): void {
+    this.editingClientId = client.id;
+    this.editingClient = client;
+    this.showEditForm = true;
+  }
+
+  onEditSubmit(clientData: CreateClientRequest): void {
+    if (this.editingClientId) {
+      const updateRequest = {
+        id: this.editingClientId,
+        ...clientData
+      };
+      
+      this.clientService.updateClient(this.editingClientId, updateRequest).subscribe({
+        next: (updatedClient) => {
+          const index = this.clients.findIndex(c => c.id === this.editingClientId);
+          if (index !== -1) {
+            this.clients[index] = updatedClient;
+            this.applyFilters();
+          }
+          this.onEditCancel();
         },
         error: (error) => {
-          console.error('Error creating client:', error);
+          console.error('Error updating client:', error);
         }
       });
     }
   }
 
-  editClient(client: Client): void {
-    // TODO: Implement edit functionality
-    console.log('Edit client:', client);
-    // This will be implemented in the next step
+  onEditCancel(): void {
+    this.showEditForm = false;
+    this.editingClientId = null;
+    this.editingClient = null;
   }
 
   deleteClient(client: Client): void {
@@ -74,9 +102,6 @@ export class ClientListComponent implements OnInit {
     }
   }
 
-  cancelCreate(): void {
-    this.resetForm();
-  }
 
   onSearchChange(): void {
     this.applyFilters();
@@ -106,19 +131,6 @@ export class ClientListComponent implements OnInit {
     this.filteredClients = filtered;
   }
 
-  private isValidClient(): boolean {
-    return !!(this.newClient.firstName && this.newClient.lastName && this.newClient.birthdate);
-  }
-
-  private resetForm(): void {
-    this.newClient = {
-      firstName: '',
-      lastName: '',
-      birthdate: '',
-      isActive: false
-    };
-    this.showNewClientForm = false;
-  }
 
   trackByClientId(index: number, client: Client): string {
     return client.id;

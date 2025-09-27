@@ -2,6 +2,7 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { FormsModule } from '@angular/forms';
 import { ClientListComponent } from './client-list.component';
+import { ClientFormComponent } from '@shared/components/client-form/client-form.component';
 import { ClientService } from '@core/services/client.service';
 import { of } from 'rxjs';
 
@@ -31,11 +32,12 @@ describe('ClientListComponent', () => {
     const spy = {
       getClients: jest.fn(),
       createClient: jest.fn(),
+      updateClient: jest.fn(),
       deleteClient: jest.fn()
     } as jest.Mocked<ClientService>;
 
     TestBed.configureTestingModule({
-      declarations: [ClientListComponent],
+      declarations: [ClientListComponent, ClientFormComponent],
       imports: [HttpClientTestingModule, FormsModule],
       providers: [
         { provide: ClientService, useValue: spy }
@@ -89,9 +91,9 @@ describe('ClientListComponent', () => {
     const createdClient = { id: '3', ...newClient };
     
     clientService.createClient.mockReturnValue(of(createdClient));
-    component.newClient = newClient;
+    component.clients = [];
     
-    component.createClient();
+    component.onCreateSubmit(newClient);
     
     expect(clientService.createClient).toHaveBeenCalledWith(newClient);
     expect(component.clients).toContain(createdClient);
@@ -106,5 +108,39 @@ describe('ClientListComponent', () => {
     
     expect(clientService.deleteClient).toHaveBeenCalledWith('1');
     expect(component.clients).not.toContain(mockClients[0]);
+  });
+
+  it('should start editing a client', () => {
+    component.editClient(mockClients[0]);
+    
+    expect(component.showEditForm).toBe(true);
+    expect(component.editingClientId).toBe('1');
+    expect(component.editingClient).toEqual(mockClients[0]);
+  });
+
+  it('should update a client', () => {
+    const updatedClient = { ...mockClients[0], firstName: 'Johnny' };
+    clientService.updateClient.mockReturnValue(of(updatedClient));
+    component.clients = [...mockClients];
+    component.editingClientId = '1';
+    const updateData = { ...mockClients[0], firstName: 'Johnny' };
+    
+    component.onEditSubmit(updateData);
+    
+    expect(clientService.updateClient).toHaveBeenCalledWith('1', expect.objectContaining({ id: '1', firstName: 'Johnny' }));
+    expect(component.clients[0].firstName).toBe('Johnny');
+    expect(component.showEditForm).toBe(false);
+  });
+
+  it('should cancel editing', () => {
+    component.showEditForm = true;
+    component.editingClientId = '1';
+    component.editingClient = mockClients[0];
+    
+    component.onEditCancel();
+    
+    expect(component.showEditForm).toBe(false);
+    expect(component.editingClientId).toBe(null);
+    expect(component.editingClient).toBe(null);
   });
 });

@@ -2,30 +2,20 @@
   <button style="font-size: 16px" (click)="showNewClientForm = true">Create client</button>
 </div>
 <div class="clients">
-  <div class="new-client" *ngIf="showNewClientForm">
-    <h3>Create new client</h3>
-    <input
-      type="text"
-      placeholder="First name"
-      [(ngModel)]="newClient.firstName"
-    />
-    <input
-      type="text"
-      placeholder="Last name"
-      [(ngModel)]="newClient.lastName"
-    />
-    <input
-      type="text"
-      placeholder="Birthdate"
-      [(ngModel)]="newClient.birthdate"
-    />
-    <input
-      type="text"
-      placeholder="Active state"
-      [(ngModel)]="newClient.isActive"
-    />
-    <button (click)="createClient()">Create client</button>
-  </div>
+  <app-client-form
+    [showForm]="showNewClientForm"
+    [isEditMode]="false"
+    (formSubmit)="onCreateSubmit($event)"
+    (formCancel)="onCreateCancel()">
+  </app-client-form>
+
+  <app-client-form
+    [showForm]="showEditForm"
+    [isEditMode]="true"
+    [client]="editingClient"
+    (formSubmit)="onEditSubmit($event)"
+    (formCancel)="onEditCancel()">
+  </app-client-form>
   <div class="clients-filter">
     <h3>Filter clients</h3>
     <div class="flex-wrapper">
