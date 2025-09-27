@@ -285,6 +285,29 @@
 }
 
 // Responsive Design
+@media (max-width: 1024px) {
+  .hero-visual {
+    height: 300px;
+  }
+
+  .floating-card {
+    &:nth-child(1) {
+      top: 15%;
+      left: 5%;
+    }
+
+    &:nth-child(2) {
+      top: 45%;
+      right: 15%;
+    }
+
+    &:nth-child(3) {
+      top: 70%;
+      left: 15%;
+    }
+  }
+}
+
 @media (max-width: 768px) {
   .hero-section {
     padding: 2rem 1rem;
@@ -303,13 +326,38 @@
     gap: 1.5rem;
   }
 
+  .hero-visual {
+    height: 200px;
+    position: relative;
+  }
+
   .floating-card {
+    position: relative;
+    margin: 0.5rem;
     padding: 1rem;
+    width: auto;
+    display: inline-block;
+    animation: none;
+    transform: none;
+
+    &:hover {
+      transform: translateY(-2px);
+    }
 
     mat-icon {
       font-size: 1.5rem;
       width: 1.5rem;
       height: 1.5rem;
+    }
+
+    &:nth-child(1),
+    &:nth-child(2),
+    &:nth-child(3) {
+      position: relative;
+      top: auto;
+      left: auto;
+      right: auto;
+      animation-delay: 0s;
     }
   }
 }
