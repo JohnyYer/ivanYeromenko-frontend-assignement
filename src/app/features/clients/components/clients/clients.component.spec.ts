@@ -2,7 +2,7 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { FormsModule } from '@angular/forms';
 import { ClientsComponent } from './clients.component';
-import { ClientListComponent } from '../client-list/client-list.component';
+import { ClientListComponent } from '@features/clients/components/client-list/client-list.component';
 
 describe('ClientsComponent', () => {
   let component: ClientsComponent;

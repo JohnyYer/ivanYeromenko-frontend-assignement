@@ -1,7 +1,7 @@
 import { TestBed } from '@angular/core/testing';
 import { HttpClientTestingModule, HttpTestingController } from '@angular/common/http/testing';
 import { ClientService } from './client.service';
-import { Client, CreateClientRequest } from '../../shared/models/client.model';
+import { Client, CreateClientRequest } from '@shared/models/client.model';
 
 describe('ClientService', () => {
   let service: ClientService;
