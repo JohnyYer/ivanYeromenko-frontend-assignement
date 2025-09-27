@@ -1,11 +1,49 @@
-<div class="client-card">
-  <span class="client-info">
-    {{ client.firstName }} {{ client.lastName }} -
-    {{ client.birthDate | dateFormat: 'display' }} -
-    {{ client.isActive ? 'Active' : 'Inactive' }}
-  </span>
-  <span class="client-actions">
-    <a (click)="onEdit()" class="edit-link">Edit</a>
-    <a (click)="onDelete()" class="delete-link">Delete</a>
-  </span>
-</div>
+<mat-card class="client-card">
+  <mat-card-header>
+    <div mat-card-avatar class="client-avatar">
+      <mat-icon>person</mat-icon>
+    </div>
+    <mat-card-title class="client-name">
+      {{ client.firstName }} {{ client.lastName }}
+    </mat-card-title>
+    <mat-card-subtitle class="client-status">
+      <mat-icon [class]="client.isActive ? 'status-active' : 'status-inactive'">
+        {{ client.isActive ? 'check_circle' : 'cancel' }}
+      </mat-icon>
+      {{ client.isActive ? 'Active' : 'Inactive' }}
+    </mat-card-subtitle>
+  </mat-card-header>
+
+  <mat-card-content>
+    <div class="client-details">
+      <div class="detail-item">
+        <mat-icon class="detail-icon">cake</mat-icon>
+        <span class="detail-label">Birth Date:</span>
+        <span class="detail-value">{{
+          client.birthDate | dateFormat: 'display'
+        }}</span>
+      </div>
+    </div>
+  </mat-card-content>
+
+  <mat-card-actions class="client-actions">
+    <button
+      mat-button
+      color="primary"
+      (click)="onEdit()"
+      class="action-button edit-button"
+    >
+      <mat-icon>edit</mat-icon>
+      Edit
+    </button>
+    <button
+      mat-button
+      color="warn"
+      (click)="onDelete()"
+      class="action-button delete-button"
+    >
+      <mat-icon>delete</mat-icon>
+      Delete
+    </button>
+  </mat-card-actions>
+</mat-card>

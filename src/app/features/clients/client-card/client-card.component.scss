@@ -1,48 +1,191 @@
 .client-card {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 12px 16px;
-  margin-bottom: 8px;
-  border: 1px solid #ddd;
-  border-radius: 4px;
-  background-color: #f9f9f9;
-  transition: all 0.2s ease;
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  transition: all 0.3s ease;
+  overflow: hidden;
+  background: white;
 
   &:hover {
-    background-color: #f0f0f0;
-    border-color: #ccc;
+    transform: translateY(-4px);
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
   }
 
-  .client-info {
-    flex: 1;
-    font-size: 14px;
-    color: #333;
-  }
+  mat-card-header {
+    padding: 1.5rem 1.5rem 1rem 1.5rem;
+    background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
 
-  .client-actions {
-    display: flex;
-    gap: 12px;
+    .client-avatar {
+      background: linear-gradient(135deg, #1976d2 0%, #42a5f5 100%);
+      color: white;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 48px;
+      height: 48px;
 
-    a {
-      color: #007bff;
-      text-decoration: none;
-      cursor: pointer;
-      font-size: 14px;
+      mat-icon {
+        font-size: 1.5rem;
+        width: 1.5rem;
+        height: 1.5rem;
+        color: white;
+      }
+    }
+
+    .client-name {
+      font-family: 'Inter', 'Roboto', sans-serif;
+      font-size: 1.25rem;
+      font-weight: 600;
+      color: #2c3e50;
+      margin: 0;
+      line-height: 1.2;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      max-width: 200px;
+
+      @media (max-width: 768px) {
+        max-width: 150px;
+      }
+    }
+
+    .client-status {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      margin: 0.5rem 0 0 0;
       font-weight: 500;
-      transition: color 0.2s ease;
 
-      &:hover {
-        color: #0056b3;
-        text-decoration: underline;
+      mat-icon {
+        font-size: 1rem;
+        width: 1rem;
+        height: 1rem;
+
+        &.status-active {
+          color: #4caf50;
+        }
+
+        &.status-inactive {
+          color: #f44336;
+        }
+      }
+    }
+  }
+
+  mat-card-content {
+    padding: 1rem 1.5rem;
+
+    .client-details {
+      .detail-item {
+        display: flex;
+        align-items: center;
+        gap: 0.75rem;
+        padding: 0.5rem 0;
+
+        .detail-icon {
+          color: #666;
+          font-size: 1.125rem;
+          width: 1.125rem;
+          height: 1.125rem;
+        }
+
+        .detail-label {
+          font-weight: 500;
+          color: #666;
+          font-size: 0.875rem;
+          min-width: 80px;
+        }
+
+        .detail-value {
+          font-weight: 600;
+          color: #2c3e50;
+          font-size: 0.875rem;
+        }
+      }
+    }
+  }
+
+  mat-card-actions {
+    padding: 0.5rem 1.5rem 1.5rem 1.5rem;
+    display: flex;
+    gap: 0.75rem;
+    justify-content: flex-end;
+
+    .action-button {
+      font-family: 'Inter', 'Roboto', sans-serif;
+      font-weight: 500;
+      font-size: 0.875rem;
+      border-radius: 6px;
+      padding: 0.5rem 1rem;
+      transition: all 0.3s ease;
+
+      mat-icon {
+        margin-right: 0.5rem;
+        font-size: 1rem;
+        width: 1rem;
+        height: 1rem;
       }
 
-      &.delete-link {
-        color: #dc3545;
+      &.edit-button {
+        background-color: rgba(25, 118, 210, 0.1);
+        color: #1976d2;
+        border: 1px solid rgba(25, 118, 210, 0.2);
 
         &:hover {
-          color: #c82333;
+          background-color: rgba(25, 118, 210, 0.2);
+          transform: translateY(-1px);
+          box-shadow: 0 2px 8px rgba(25, 118, 210, 0.3);
         }
+      }
+
+      &.delete-button {
+        background-color: rgba(244, 67, 54, 0.1);
+        color: #f44336;
+        border: 1px solid rgba(244, 67, 54, 0.2);
+
+        &:hover {
+          background-color: rgba(244, 67, 54, 0.2);
+          transform: translateY(-1px);
+          box-shadow: 0 2px 8px rgba(244, 67, 54, 0.3);
+        }
+      }
+    }
+  }
+}
+
+// Responsive Design
+@media (max-width: 768px) {
+  .client-card {
+    mat-card-header {
+      padding: 1rem 1rem 0.75rem 1rem;
+
+      .client-avatar {
+        width: 40px;
+        height: 40px;
+
+        mat-icon {
+          font-size: 1.25rem;
+          width: 1.25rem;
+          height: 1.25rem;
+        }
+      }
+
+      .client-name {
+        font-size: 1.125rem;
+      }
+    }
+
+    mat-card-content {
+      padding: 0.75rem 1rem;
+    }
+
+    mat-card-actions {
+      padding: 0.5rem 1rem 1rem 1rem;
+      flex-direction: column;
+      gap: 0.5rem;
+
+      .action-button {
+        width: 100%;
+        justify-content: center;
       }
     }
   }
