@@ -1,54 +1,278 @@
-// Angular Material theming - must be at the top
 @use '@angular/material' as mat;
+
+// Import Google Fonts
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Roboto:wght@300;400;500;700&display=swap');
+
+// Global font styling
+* {
+  box-sizing: border-box;
+}
 
 body {
   margin: 0;
   padding: 0;
-  font-family: Helvetica, sans-serif;
+  font-family:
+    'Inter',
+    'Roboto',
+    -apple-system,
+    BlinkMacSystemFont,
+    'Segoe UI',
+    sans-serif;
+  font-weight: 400;
+  line-height: 1.6;
+  color: #333;
+  background-color: #fafafa;
 }
 
+// Typography scale
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  font-family: 'Inter', 'Roboto', sans-serif;
+  font-weight: 600;
+  line-height: 1.2;
+  margin: 0 0 1rem 0;
+  color: #2c3e50;
+}
+
+h1 {
+  font-size: 2.5rem;
+  font-weight: 700;
+  letter-spacing: -0.025em;
+}
+
+h2 {
+  font-size: 2rem;
+  font-weight: 600;
+  letter-spacing: -0.025em;
+}
+
+h3 {
+  font-size: 1.5rem;
+  font-weight: 600;
+}
+
+h4 {
+  font-size: 1.25rem;
+  font-weight: 500;
+}
+
+h5 {
+  font-size: 1.125rem;
+  font-weight: 500;
+}
+
+h6 {
+  font-size: 1rem;
+  font-weight: 500;
+}
+
+p {
+  margin: 0 0 1rem 0;
+  font-size: 1rem;
+  line-height: 1.6;
+}
+
+// Link styling
+a {
+  color: #1976d2;
+  text-decoration: none;
+  font-weight: 500;
+  transition: color 0.2s ease;
+
+  &:hover {
+    color: #1565c0;
+    text-decoration: underline;
+  }
+
+  &:focus {
+    outline: 2px solid #1976d2;
+    outline-offset: 2px;
+  }
+}
+
+// Form elements styling
 input {
   width: 250px;
   height: 40px;
   margin: 8px;
+  padding: 0 12px;
+  font-family: 'Inter', sans-serif;
+  font-size: 0.875rem;
+  border: 2px solid #e0e0e0;
+  border-radius: 8px;
+  transition:
+    border-color 0.2s ease,
+    box-shadow 0.2s ease;
+
+  &:focus {
+    outline: none;
+    border-color: #1976d2;
+    box-shadow: 0 0 0 3px rgba(25, 118, 210, 0.1);
+  }
+
+  &::placeholder {
+    color: #9e9e9e;
+    font-weight: 400;
+  }
 }
 
 button {
-  background-color: #006175;
-  border: 1px solid #006175;
+  background-color: #1976d2;
+  border: 1px solid #1976d2;
   color: white;
-  padding: 8px 16px;
-  border-radius: 30px;
-}
-
-// Removed old header styles - now using Angular Material toolbar
-
-.client-card {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 16px;
-  border: 1px solid #006175;
-  background-color: #f9f9f9;
-  margin-bottom: 8px;
-  padding: 16px;
+  padding: 10px 20px;
   border-radius: 8px;
-}
-
-a {
+  font-family: 'Inter', sans-serif;
+  font-size: 0.875rem;
+  font-weight: 500;
   cursor: pointer;
-  text-decoration: underline;
-  color: #006175;
+  transition: all 0.2s ease;
+
+  &:hover {
+    background-color: #1565c0;
+    border-color: #1565c0;
+    transform: translateY(-1px);
+    box-shadow: 0 4px 8px rgba(25, 118, 210, 0.3);
+  }
+
+  &:active {
+    transform: translateY(0);
+    box-shadow: 0 2px 4px rgba(25, 118, 210, 0.3);
+  }
+
+  &:focus {
+    outline: 2px solid #1976d2;
+    outline-offset: 2px;
+  }
 }
 
-html,
-body {
-  height: 100%;
-}
-body {
-  margin: 0;
-  font-family: Roboto, 'Helvetica Neue', sans-serif;
+// Utility classes
+.text-center {
+  text-align: center;
 }
 
-// Use default Material theme - simplified approach
+.text-left {
+  text-align: left;
+}
+
+.text-right {
+  text-align: right;
+}
+
+.font-light {
+  font-weight: 300;
+}
+
+.font-normal {
+  font-weight: 400;
+}
+
+.font-medium {
+  font-weight: 500;
+}
+
+.font-semibold {
+  font-weight: 600;
+}
+
+.font-bold {
+  font-weight: 700;
+}
+
+.text-sm {
+  font-size: 0.875rem;
+}
+
+.text-base {
+  font-size: 1rem;
+}
+
+.text-lg {
+  font-size: 1.125rem;
+}
+
+.text-xl {
+  font-size: 1.25rem;
+}
+
+.text-2xl {
+  font-size: 1.5rem;
+}
+
+.text-3xl {
+  font-size: 1.875rem;
+}
+
+.text-4xl {
+  font-size: 2.25rem;
+}
+
+// Color utilities
+.text-primary {
+  color: #1976d2;
+}
+
+.text-secondary {
+  color: #757575;
+}
+
+.text-success {
+  color: #4caf50;
+}
+
+.text-warning {
+  color: #ff9800;
+}
+
+.text-error {
+  color: #f44336;
+}
+
+.text-muted {
+  color: #9e9e9e;
+}
+
+// Spacing utilities
+.mb-1 {
+  margin-bottom: 0.25rem;
+}
+.mb-2 {
+  margin-bottom: 0.5rem;
+}
+.mb-3 {
+  margin-bottom: 0.75rem;
+}
+.mb-4 {
+  margin-bottom: 1rem;
+}
+.mb-5 {
+  margin-bottom: 1.25rem;
+}
+.mb-6 {
+  margin-bottom: 1.5rem;
+}
+
+.mt-1 {
+  margin-top: 0.25rem;
+}
+.mt-2 {
+  margin-top: 0.5rem;
+}
+.mt-3 {
+  margin-top: 0.75rem;
+}
+.mt-4 {
+  margin-top: 1rem;
+}
+.mt-5 {
+  margin-top: 1.25rem;
+}
+.mt-6 {
+  margin-top: 1.5rem;
+}
+
 @include mat.core();
